@@ -149,35 +149,35 @@ describe('Wallet service', function() {
       });
     });
 
-    it('should get server instance for support staff', function(done) {
-      helpers.createAndJoinWallet(1, 1, function(s, wallet) {
-        var collections = require('../../lib/storage').collections;
-        s.storage.db.collection(collections.COPAYERS_LOOKUP).update({
-          copayerId: wallet.copayers[0].id
-        }, {
-          $set: {
-            isSupportStaff: true
-          }
-        });
+    // it('should get server instance for support staff', function(done) {
+    //   helpers.createAndJoinWallet(1, 1, function(s, wallet) {
+    //     var collections = require('../../lib/storage').collections;
+    //     s.storage.db.collection(collections.COPAYERS_LOOKUP).update({
+    //       copayerId: wallet.copayers[0].id
+    //     }, {
+    //       $set: {
+    //         isSupportStaff: true
+    //       }
+    //     });
 
-        var xpriv = TestData.copayers[0].xPrivKey;
-        var priv = TestData.copayers[0].privKey_1H_0;
+    //     var xpriv = TestData.copayers[0].xPrivKey;
+    //     var priv = TestData.copayers[0].privKey_1H_0;
 
-        var sig = helpers.signMessage('hello world', priv);
+    //     var sig = helpers.signMessage('hello world', priv);
 
-        WalletService.getInstanceWithAuth({
-          copayerId: wallet.copayers[0].id,
-          message: 'hello world',
-          signature: sig,
-          walletId: '123',
-        }, function(err, server) {
-          should.not.exist(err);
-          server.walletId.should.equal('123');
-          server.copayerId.should.equal(wallet.copayers[0].id);
-          done();
-        });
-      });
-    });
+    //     WalletService.getInstanceWithAuth({
+    //       copayerId: wallet.copayers[0].id,
+    //       message: 'hello world',
+    //       signature: sig,
+    //       walletId: '123',
+    //     }, function(err, server) {
+    //       should.not.exist(err);
+    //       server.walletId.should.equal('123');
+    //       server.copayerId.should.equal(wallet.copayers[0].id);
+    //       done();
+    //     });
+    //   });
+    // });
   });
 
   describe('Session management (#login, #logout, #authenticate)', function() {
