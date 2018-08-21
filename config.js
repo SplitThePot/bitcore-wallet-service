@@ -66,12 +66,12 @@ var config = {
     }
   },
   pushNotificationsOpts: {
-    templatePath: "./lib/templates",
-    defaultLanguage: "en",
-    defaultUnit: "btc",
-    subjectPrefix: "",
-    pushServerUrl: "https://fcm.googleapis.com/fcm",
-    authorizationKey: ""
+    templatePath: './lib/templates',
+    defaultLanguage: 'en',
+    defaultUnit: 'btc',
+    subjectPrefix: '',
+    pushServerUrl: 'https://fcm.googleapis.com/fcm',
+    authorizationKey: 'You_have_to_put_something_here',
   },
   fiatRateServiceOpts: {
     defaultProvider: "BitPay",
@@ -93,8 +93,8 @@ var config = {
   //      testnet: 'https://test-insight.bitpay.com/tx/{{txid}}',
   //    },
   //    bch: {
-  //      livenet: 'https://bch-insight.bitpay.com/tx/{{txid}}',
-  //      testnet: 'https://test-bch-insight.bitpay.com/tx/{{txid}}',
+  //      livenet: 'https://bch-insight.bitpay.com/#/tx/{{txid}}',
+  //      testnet: 'https://test-bch-insight.bitpay.com/#/tx/{{txid}}',
   //    }
   //  },
   // },
