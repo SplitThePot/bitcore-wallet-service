@@ -1,0 +1,9 @@
+**/node_modules
+**/logs
+**/pids
+deployment
+README.md
+.git*
+.vscode
+docker-compose.yml
+docker-host/**

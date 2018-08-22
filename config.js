@@ -21,21 +21,22 @@ var config = {
 
   storageOpts: {
     mongoDb: {
-      uri: "mongodb://localhost:27017/bws",
-      collectionName: "bws"
+      uri: process.env["MONGO_STRING"], // "mongodb://localhost:27017/bws",
+      dbName: process.env["MONGO_DBNAME"], // "bws"
+      collectionName: process.env["MONGO_COLLECTION"] // "bws"
     }
   },
   lockOpts: {
     //  To use locker-server, uncomment this:
     lockerServer: {
-      host: "localhost",
+      host: process.env["LOCKER_SERVICE"], // "localhost",
       port: 3231
     }
   },
   messageBrokerOpts: {
     //  To use message broker server, uncomment this:
     messageBrokerServer: {
-      url: "http://localhost:3380"
+      url: process.env["MESSAGEBROKER_SERVICE"] // "http://localhost:3380"
     }
   },
   blockchainExplorerOpts: {
@@ -65,14 +66,14 @@ var config = {
       }
     }
   },
-  pushNotificationsOpts: {
-    templatePath: './lib/templates',
-    defaultLanguage: 'en',
-    defaultUnit: 'btc',
-    subjectPrefix: '',
-    pushServerUrl: 'https://fcm.googleapis.com/fcm',
-    authorizationKey: 'You_have_to_put_something_here',
-  },
+  // pushNotificationsOpts: {
+  //   templatePath: "./lib/templates",
+  //   defaultLanguage: "en",
+  //   defaultUnit: "btc",
+  //   subjectPrefix: "",
+  //   pushServerUrl: "https://fcm.googleapis.com/fcm",
+  //   authorizationKey: "You_have_to_put_something_here"
+  // },
   fiatRateServiceOpts: {
     defaultProvider: "BitPay",
     fetchInterval: 60 // in minutes
