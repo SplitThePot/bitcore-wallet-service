@@ -1,65 +1,66 @@
-version: "3.4"
+version: '3.4'
 
 services:
   bws:
-    container_name: "bws"
+    container_name: 'bws'
     image: bws
-    depends_on:
-      - bws-mongo
+    # depends_on:
+    #   - bws-mongo
     build:
       context: .
       dockerfile: Dockerfile
     environment:
-      #MONGO_STRING: mongodb://localhost:C2y6yDjf5/R+ob0N8A7Cgv30VRDJIWEHLM+4QDU5DE2nQ9nDuVTqobD4b8mGGyPMbIZnqyMsEcaGQy67XIw/Jw==@dockerhost:10255/?ssl=true
-      MONGO_STRING: mongodb://bws-mongo:27017
-      MONGO_DBNAME: "bws"
-      MONGO_COLLECTION: "bws"
+      MONGO_STRING: mongodb://localhost:C2y6yDjf5/R+ob0N8A7Cgv30VRDJIWEHLM+4QDU5DE2nQ9nDuVTqobD4b8mGGyPMbIZnqyMsEcaGQy67XIw/Jw==@host.docker.internal:10255/?ssl=true
+      # MONGO_STRING: mongodb://bws-mongo:27017
+      MONGO_DBNAME: 'bws'
+      MONGO_COLLECTION: 'bws'
       LOCKER_SERVICE: bws-locker
       MESSAGEBROKER_SERVICE: http://bws-message-broker:3380
     ports:
       - 3232:3232
+      - 127.0.0.1:9229:9229
     entrypoint: /bws/start-default.sh
   bws-locker:
-    container_name: "bws-locker"
+    container_name: 'bws-locker'
     image: bws
     ports:
       - 3231:3231
     entrypoint: /bws/start-locker.sh
   bws-message-broker:
-    container_name: "bws-message-broker"
+    container_name: 'bws-message-broker'
     image: bws
     environment:
-      #MONGO_STRING: mongodb://localhost:C2y6yDjf5/R+ob0N8A7Cgv30VRDJIWEHLM+4QDU5DE2nQ9nDuVTqobD4b8mGGyPMbIZnqyMsEcaGQy67XIw/Jw==@dockerhost:10255/?ssl=true
-      MONGO_STRING: mongodb://bws-mongo:27017
-      MONGO_DBNAME: "bws"
-      MONGO_COLLECTION: "bws"
+      MONGO_STRING: mongodb://localhost:C2y6yDjf5/R+ob0N8A7Cgv30VRDJIWEHLM+4QDU5DE2nQ9nDuVTqobD4b8mGGyPMbIZnqyMsEcaGQy67XIw/Jw==@host.docker.internal:10255/?ssl=true
+      #MONGO_STRING: mongodb://bws-mongo:27017
+      MONGO_DBNAME: 'bws'
+      MONGO_COLLECTION: 'bws'
       LOCKER_SERVICE: bws-locker
       MESSAGEBROKER_SERVICE: http://0.0.0.0:3380
     ports:
       - 3380:3380
     entrypoint: /bws/start-messagebroker.sh
-  bws-mongo:
-    container_name: "bws-mongo"
-    image: mongo:3.2
-    ports:
-      - "27017:27017"
-  mongoexpress:
-    container_name: "bws-mongoexpress"
-    image: mongo-express
-    depends_on:
-      - bws-mongo
-    environment:
-      ME_CONFIG_MONGODB_SERVER: bws-mongo
-    ports:
-      - "8099:8081"
-  dockerhost:
-    container_name: "docker-hostaccess"
-    image: docker-host
-    build:
-      context: ./docker-host
-      dockerfile: Dockerfile
-    cap_add: ["NET_ADMIN", "NET_RAW"]
-    #mem_limit: 4M
-    restart: on-failure
-    #environment:
-    #  - PORTS=0:1024,900
+  # bws-mongo:
+  #   container_name: 'bws-mongo'
+  #   image: mongo:3.2
+  #   ports:
+  #     - '27017:27017'
+  # mongoexpress:
+  #   container_name: 'bws-mongoexpress'
+  #   image: mongo-express
+  #   # depends_on:
+  #   #   - bws-mongo
+  #   environment:
+  #     ME_CONFIG_MONGODB_SERVER: mongodb://localhost:C2y6yDjf5/R+ob0N8A7Cgv30VRDJIWEHLM+4QDU5DE2nQ9nDuVTqobD4b8mGGyPMbIZnqyMsEcaGQy67XIw/Jw==@host.docker.internal:10255/?ssl=true
+  #   ports:
+  #     - '8099:8081'
+  # dockerhost:
+  #   container_name: 'docker-hostaccess'
+  #   image: docker-host
+  #   build:
+  #     context: ./docker-host
+  #     dockerfile: Dockerfile
+  #   cap_add: ['NET_ADMIN', 'NET_RAW']
+  #   #mem_limit: 4M
+  #   restart: on-failure
+  #environment:
+  #  - PORTS=0:1024,900
