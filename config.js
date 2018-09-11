@@ -1,5 +1,5 @@
 var config = {
-  basePath: "/bws/api",
+  basePath: '/bws/api',
   disableLogs: false,
   port: 3232,
 
@@ -21,53 +21,50 @@ var config = {
 
   storageOpts: {
     mongoDb: {
-      uri: process.env["MONGO_STRING"], // "mongodb://localhost:27017/bws",
-      dbName: process.env["MONGO_DBNAME"], // "bws"
-      collectionName: process.env["MONGO_COLLECTION"] // "bws"
-    }
+      uri: process.env['MONGO_STRING'], // "mongodb://localhost:27017/bws",
+      dbName: process.env['MONGO_DBNAME'], // "bws"
+      collectionName: process.env['MONGO_COLLECTION'], // "bws"
+    },
   },
   lockOpts: {
     //  To use locker-server, uncomment this:
     lockerServer: {
-      host: process.env["LOCKER_SERVICE"], // "localhost",
-      port: 3231
-    }
+      host: process.env['LOCKER_SERVICE'], // "localhost",
+      port: 3231,
+    },
   },
   messageBrokerOpts: {
     //  To use message broker server, uncomment this:
     messageBrokerServer: {
-      url: process.env["MESSAGEBROKER_SERVICE"] // "http://localhost:3380"
-    }
+      url: process.env['MESSAGEBROKER_SERVICE'], // "http://localhost:3380"
+    },
   },
   blockchainExplorerOpts: {
     btc: {
       livenet: {
-        provider: "insight",
-        url: "https://insight.bitpay.com:443"
+        provider: 'insight',
+        url: 'https://insight.bitpay.com:443',
       },
       testnet: {
-        provider: "insight",
-        url: [
-          "https://test-insight.bitpay.com:443",
-          "https://testnet.blockexplorer.com"
-        ]
+        provider: 'insight',
+        url: ['https://test-insight.bitpay.com:443', 'https://testnet.blockexplorer.com'],
         // Multiple servers (in priority order)
         // url: ['http://a.b.c', 'https://test-insight.bitpay.com:443'],
-      }
+      },
     },
     bch: {
       livenet: {
-        provider: "insight",
+        provider: 'insight',
         //url: 'https://cashexplorer.bitcoin.com',
-        url: "https://bch-insight.bitpay.com:443",
-        addressFormat: "cashaddr" // copay, cashaddr, or legacy
+        url: 'https://bch-insight.bitpay.com:443',
+        addressFormat: 'cashaddr', // copay, cashaddr, or legacy
       },
       testnet: {
-        provider: "insight",
-        url: "https://test-bch-insight.bitpay.com:443",
-        addressFormat: "cashaddr" // copay, cashaddr, or legacy
-      }
-    }
+        provider: 'insight',
+        url: 'https://test-bch-insight.bitpay.com:443',
+        addressFormat: 'cashaddr', // copay, cashaddr, or legacy
+      },
+    },
   },
   // pushNotificationsOpts: {
   //   templatePath: "./lib/templates",
@@ -78,9 +75,9 @@ var config = {
   //   authorizationKey: "You_have_to_put_something_here"
   // },
   fiatRateServiceOpts: {
-    defaultProvider: "BitPay",
-    fetchInterval: 60 // in minutes
-  }
+    defaultProvider: 'BitPay',
+    fetchInterval: 60, // in minutes
+  },
   // To use email notifications uncomment this:
   // emailOpts: {
   //  host: 'localhost',
