@@ -20,7 +20,6 @@ module.exports = {
       log: './logs/bcmonitor.log',
       log_type: 'json',
       log_date_format: 'YYYY-MM-DD HH:mm:ss Z',
-      node_args: '--expose-gc --inspect=0.0.0.0:9229',
     },
     {
       name: 'fiatrateservice',
