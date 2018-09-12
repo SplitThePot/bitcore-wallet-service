@@ -9,4 +9,4 @@ if [[ $# -gt 0 ]]; then
   fi
 fi
 
-pm2-runtime start $ECOSYSTEM --only bws
+pm2-runtime start "$ECOSYSTEM" --only bcmonitor 

@@ -1,6 +1,13 @@
 #!/bin/bash
 
-pm2 start --only locker
+ECOSYSTEM=ecosystem.json
 
-pm2 logs
+if [[ $# -gt 0 ]]; then
+  if [[ "$1" == "--debug" ]]; then
+    echo "Debug mode"
+    ECOSYSTEM=ecosystem.debug.json
+  fi
+fi
+
+pm2-runtime start $ECOSYSTEM --only locker
  

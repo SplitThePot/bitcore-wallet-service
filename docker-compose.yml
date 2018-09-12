@@ -18,14 +18,28 @@ services:
       MESSAGEBROKER_SERVICE: http://bws-message-broker:3380
     ports:
       - '3232:3232'
+      - '127.0.0.1:9230:9229'
+    entrypoint: '/bws/start-default.sh --debug'
+  bws-monitor:
+    container_name: 'bws-monitor'
+    image: bws
+    environment:
+      MONGO_STRING: mongodb://localhost:C2y6yDjf5/R+ob0N8A7Cgv30VRDJIWEHLM+4QDU5DE2nQ9nDuVTqobD4b8mGGyPMbIZnqyMsEcaGQy67XIw/Jw==@host.docker.internal:10255/?ssl=true
+      # MONGO_STRING: mongodb://bws-mongo:27017
+      MONGO_DBNAME: 'bws'
+      MONGO_COLLECTION: 'bws'
+      LOCKER_SERVICE: bws-locker
+      MESSAGEBROKER_SERVICE: http://bws-message-broker:3380
+    ports:
       - '127.0.0.1:9229:9229'
-    entrypoint: /bws/start-debug.sh
+    entrypoint: '/bws/start-monitor.sh --debug'
   bws-locker:
     container_name: 'bws-locker'
     image: bws
     ports:
       - 3231:3231
-    entrypoint: /bws/start-locker.sh
+      - '127.0.0.1:9231:9229'
+    entrypoint: '/bws/start-locker.sh --debug'
   bws-message-broker:
     container_name: 'bws-message-broker'
     image: bws
@@ -38,7 +52,8 @@ services:
       MESSAGEBROKER_SERVICE: http://0.0.0.0:3380
     ports:
       - '3380:3380'
-    entrypoint: /bws/start-messagebroker.sh
+      - '127.0.0.1:9232:9229'
+    entrypoint: '/bws/start-messagebroker.sh --debug'
   # bws-mongo:
   #   container_name: 'bws-mongo'
   #   image: mongo:3.2

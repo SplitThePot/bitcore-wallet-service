@@ -5,10 +5,40 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "Docker: Attach to Node",
+      "name": "BWS Docker: Monitor",
       "type": "node",
       "request": "attach",
       "port": 9229,
+      "address": "localhost",
+      "localRoot": "${workspaceFolder}",
+      "remoteRoot": "/bws",
+      "protocol": "inspector"
+    },
+    {
+      "name": "BWS Docker: BWS",
+      "type": "node",
+      "request": "attach",
+      "port": 9230,
+      "address": "localhost",
+      "localRoot": "${workspaceFolder}",
+      "remoteRoot": "/bws",
+      "protocol": "inspector"
+    },
+    {
+      "name": "BWS Docker: Locker",
+      "type": "node",
+      "request": "attach",
+      "port": 9231,
+      "address": "localhost",
+      "localRoot": "${workspaceFolder}",
+      "remoteRoot": "/bws",
+      "protocol": "inspector"
+    },
+    {
+      "name": "BWS Docker: Messagebroker",
+      "type": "node",
+      "request": "attach",
+      "port": 9232,
       "address": "localhost",
       "localRoot": "${workspaceFolder}",
       "remoteRoot": "/bws",
