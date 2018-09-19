@@ -6,5 +6,6 @@
   "prettier.trailingComma": "all",
   "prettier.arrowParens": "always",
   "eslint.enable": false,
+  "jshint.enable": false,
   "prettier.printWidth": 180
 }

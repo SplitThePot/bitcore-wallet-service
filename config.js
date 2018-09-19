@@ -43,28 +43,25 @@ var config = {
     btc: {
       livenet: {
         provider: 'insight',
-        url: 'https://insight.bitpay.com:443',
+        url: ['http://:3001'],
       },
       testnet: {
         provider: 'insight',
-        url: ['https://test-insight.bitpay.com:443', 'https://testnet.blockexplorer.com'],
-        // Multiple servers (in priority order)
-        // url: ['http://a.b.c', 'https://test-insight.bitpay.com:443'],
+        url: ['http://52.137.26.30:3001'],
       },
     },
-    bch: {
-      livenet: {
-        provider: 'insight',
-        //url: 'https://cashexplorer.bitcoin.com',
-        url: 'https://bch-insight.bitpay.com:443',
-        addressFormat: 'cashaddr', // copay, cashaddr, or legacy
-      },
-      testnet: {
-        provider: 'insight',
-        url: 'https://test-bch-insight.bitpay.com:443',
-        addressFormat: 'cashaddr', // copay, cashaddr, or legacy
-      },
-    },
+    // bch: {
+    //   livenet: {
+    //     provider: 'insight',
+    //     url: ['https://bitcoincash.blockexplorer.com' /*'https://bch.blockdozer.com',  'https://bch-insight.bitpay.com:443'*/],
+    //     addressFormat: 'cashaddr', // copay, cashaddr, or legacy
+    //   },
+    //   // testnet: {
+    //   //   provider: 'insight',
+    //   //   url: ['https://tbch.blockdozer.com' /*,'https://test-bch-insight.bitpay.com:443'*/],
+    //   //   addressFormat: 'cashaddr', // copay, cashaddr, or legacy
+    //   // },
+    // },
   },
   // pushNotificationsOpts: {
   //   templatePath: "./lib/templates",
