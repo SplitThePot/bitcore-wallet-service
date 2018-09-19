@@ -1,0 +1,18 @@
+{
+  "apps": [
+    {
+      "name": "bws",
+      "script": "./bws.js",
+      "log": "./logs/bws.log",
+      "log_type": "json",
+      "log_date_format": "YYYY-MM-DD HH:mm:ss Z"
+    },
+    {
+      "name": "bcmonitor",
+      "script": "./bcmonitor/bcmonitor.js",
+      "log": "./logs/bcmonitor.log",
+      "log_type": "json",
+      "log_date_format": "YYYY-MM-DD HH:mm:ss Z"
+    }
+  ]
+}

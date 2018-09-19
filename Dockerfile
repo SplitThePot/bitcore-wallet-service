@@ -9,6 +9,4 @@ ADD package*.json ./
 RUN npm install --production
 RUN npm audit fix
 ADD . .
-ADD bash-scripts/* ./
-RUN chmod +x ./*.sh
 EXPOSE 3232 3231 3380 443

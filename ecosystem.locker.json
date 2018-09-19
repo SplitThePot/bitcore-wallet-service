@@ -1,0 +1,11 @@
+{
+  "apps": [
+    {
+      "name": "locker",
+      "script": "./locker/locker.js",
+      "log": "./logs/locker.log",
+      "log_type": "json",
+      "log_date_format": "YYYY-MM-DD HH:mm:ss Z"
+    }
+  ]
+}

@@ -19,7 +19,7 @@ services:
     ports:
       - '3232:3232'
       - '127.0.0.1:9230:9229'
-    entrypoint: '/bws/start-default.sh --debug'
+    entrypoint: 'pm2-runtime start ecosystem.debug.json --only bws'
   bws-monitor:
     container_name: 'bws-monitor'
     image: bws
@@ -32,14 +32,14 @@ services:
       MESSAGEBROKER_SERVICE: http://bws-message-broker:3380
     ports:
       - '127.0.0.1:9229:9229'
-    entrypoint: '/bws/start-monitor.sh --debug'
+    entrypoint: 'pm2-runtime start ecosystem.debug.json --only bcmonitor'
   bws-locker:
     container_name: 'bws-locker'
     image: bws
     ports:
       - 3231:3231
       - '127.0.0.1:9231:9229'
-    entrypoint: '/bws/start-locker.sh --debug'
+    entrypoint: 'pm2-runtime start ecosystem.debug.json --only locker'
   bws-message-broker:
     container_name: 'bws-message-broker'
     image: bws
@@ -53,7 +53,7 @@ services:
     ports:
       - '3380:3380'
       - '127.0.0.1:9232:9229'
-    entrypoint: '/bws/start-messagebroker.sh --debug'
+    entrypoint: 'pm2-runtime start ecosystem.debug.json --only messagebroker'
   # bws-mongo:
   #   container_name: 'bws-mongo'
   #   image: mongo:3.2
