@@ -43,20 +43,24 @@ describe('Blockchain monitor', function() {
         wallet = w;
 
         var bcmonitor = new BlockchainMonitor();
-        bcmonitor.start({
-          lockOpts: {},
-          messageBroker: server.messageBroker,
-          storage: storage,
-          blockchainExplorers: {
-            'btc': {
-              'testnet': blockchainExplorer,
-              'livenet': blockchainExplorer
-            }
+        bcmonitor.start(
+          {
+            lockOpts: {},
+            messageBroker: server.messageBroker,
+            storage: storage,
+            blockchainExplorers: {
+              btc: {
+                testnet: blockchainExplorer,
+                livenet: blockchainExplorer,
+              },
+            },
+            flushBufferCount: 1,
           },
-        }, function(err) {
-          should.not.exist(err);
-          done();
-        });
+          function(err) {
+            should.not.exist(err);
+            done();
+          },
+        );
       });
     });
   });
@@ -76,7 +80,7 @@ describe('Blockchain monitor', function() {
         server.getNotifications({}, function(err, notifications) {
           should.not.exist(err);
           var notification = _.find(notifications, {
-            type: 'NewIncomingTx'
+            type: 'NewIncomingTx',
           });
           should.exist(notification);
           notification.walletId.should.equal(wallet.id);
@@ -96,13 +100,13 @@ describe('Blockchain monitor', function() {
         txid: '123',
         vout: [{}],
       };
-      server.storage.fetchAddressesWithBalance(wallet.id, function(err,ret) {
+      server.storage.fetchAddressesWithBalance(wallet.id, function(err, ret) {
         should.not.exist(err);
         _.isEmpty(ret).should.equal(true);
         incoming.vout[0][address.address] = 1500;
         socket.handlers['tx'](incoming);
         setTimeout(function() {
-          server.storage.fetchAddressesWithBalance(wallet.id, function(err,ret) {
+          server.storage.fetchAddressesWithBalance(wallet.id, function(err, ret) {
             should.not.exist(err);
             ret.length.should.equal(1);
             ret[0].address.should.equal(address.address);
@@ -117,7 +121,7 @@ describe('Blockchain monitor', function() {
     server.createAddress({}, function(err, address) {
       should.not.exist(err);
 
-      server.storage.fetchAddressesWithBalance(wallet.id, function(err,ret) {
+      server.storage.fetchAddressesWithBalance(wallet.id, function(err, ret) {
         should.not.exist(err);
         _.isEmpty(ret).should.equal(true);
 
@@ -129,8 +133,6 @@ describe('Blockchain monitor', function() {
 
         socket.handlers['tx'](incoming);
         setTimeout(function() {
-
-
           var incoming2 = {
             txid: '456',
             vout: [{}],
@@ -139,7 +141,7 @@ describe('Blockchain monitor', function() {
           socket.handlers['tx'](incoming2);
 
           setTimeout(function() {
-            server.storage.fetchAddressesWithBalance(wallet.id, function(err,ret) {
+            server.storage.fetchAddressesWithBalance(wallet.id, function(err, ret) {
               should.not.exist(err);
               ret.length.should.equal(1);
               ret[0].address.should.equal(address.address);
@@ -151,13 +153,12 @@ describe('Blockchain monitor', function() {
     });
   });
 
-
   it('should update addressWithBalance cache on 2 incoming tx, different address', function(done) {
     server.createAddress({}, function(err, address) {
       should.not.exist(err);
       server.createAddress({}, function(err, address2) {
         should.not.exist(err);
-        server.storage.fetchAddressesWithBalance(wallet.id, function(err,ret) {
+        server.storage.fetchAddressesWithBalance(wallet.id, function(err, ret) {
           should.not.exist(err);
           _.isEmpty(ret).should.equal(true);
 
@@ -169,7 +170,6 @@ describe('Blockchain monitor', function() {
           socket.handlers['tx'](incoming);
 
           setTimeout(function() {
-
             var incoming2 = {
               txid: '456',
               vout: [{}],
@@ -178,22 +178,19 @@ describe('Blockchain monitor', function() {
             socket.handlers['tx'](incoming2);
 
             setTimeout(function() {
-              server.storage.fetchAddressesWithBalance(wallet.id, function(err,ret) {
+              server.storage.fetchAddressesWithBalance(wallet.id, function(err, ret) {
+                log.info(err);
                 should.not.exist(err);
                 ret.length.should.equal(2);
                 ret[0].address.should.equal(address.address);
                 done();
               });
             }, 100);
-          }, 100);
+          }, 50);
         });
       });
     });
   });
-
-
-
-
 
   it('should not notify copayers of incoming txs more than once', function(done) {
     server.createAddress({}, function(err, address) {
@@ -212,7 +209,7 @@ describe('Blockchain monitor', function() {
           server.getNotifications({}, function(err, notifications) {
             should.not.exist(err);
             var notification = _.filter(notifications, {
-              type: 'NewIncomingTx'
+              type: 'NewIncomingTx',
             });
             notification.length.should.equal(1);
             done();
@@ -232,34 +229,37 @@ describe('Blockchain monitor', function() {
       };
       incoming.vout[0][address.address] = 1500;
 
-      server.txConfirmationSubscribe({
-        txid: '123'
-      }, function(err) {
-        should.not.exist(err);
+      server.txConfirmationSubscribe(
+        {
+          txid: '123',
+        },
+        function(err) {
+          should.not.exist(err);
 
-        blockchainExplorer.getTxidsInBlock = sinon.stub().callsArgWith(1, null, ['123', '456']);
-        socket.handlers['block']('block1');
-
-        setTimeout(function() {
           blockchainExplorer.getTxidsInBlock = sinon.stub().callsArgWith(1, null, ['123', '456']);
-          socket.handlers['block']('block2');
+          socket.handlers['block']('block1');
 
           setTimeout(function() {
-            server.getNotifications({}, function(err, notifications) {
-              should.not.exist(err);
-              var notifications = _.filter(notifications, {
-                type: 'TxConfirmation'
+            blockchainExplorer.getTxidsInBlock = sinon.stub().callsArgWith(1, null, ['123', '456']);
+            socket.handlers['block']('block2');
+
+            setTimeout(function() {
+              server.getNotifications({}, function(err, notifications) {
+                should.not.exist(err);
+                var notifications = _.filter(notifications, {
+                  type: 'TxConfirmation',
+                });
+                notifications.length.should.equal(1);
+                var n = notifications[0];
+                n.walletId.should.equal(wallet.id);
+                n.creatorId.should.equal(server.copayerId);
+                n.data.txid.should.equal('123');
+                done();
               });
-              notifications.length.should.equal(1);
-              var n = notifications[0];
-              n.walletId.should.equal(wallet.id);
-              n.creatorId.should.equal(server.copayerId);
-              n.data.txid.should.equal('123');
-              done();
-            });
+            }, 50);
           }, 50);
-        }, 50);
-      });
+        },
+      );
     });
   });
 });
