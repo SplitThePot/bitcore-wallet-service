@@ -43,7 +43,7 @@ var config = {
     btc: {
       livenet: {
         provider: 'insight',
-        url: ['http://:3001'],
+        url: ['http://40.119.157.84:3001'],
       },
       testnet: {
         provider: 'insight',
