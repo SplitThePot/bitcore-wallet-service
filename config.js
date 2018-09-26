@@ -41,10 +41,10 @@ var config = {
   },
   blockchainExplorerOpts: {
     btc: {
-      livenet: {
-        provider: 'insight',
-        url: ['http://40.119.157.84:3001'],
-      },
+      // livenet: {
+      //   provider: 'insight',
+      //   url: ['http://40.119.157.84:3001'],
+      // },
       testnet: {
         provider: 'insight',
         url: ['http://52.137.26.30:3001'],
